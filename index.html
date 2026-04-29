@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notorious Bale — Lyric Analysis Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root,[data-theme="dark"]{
+  --bg:#0e0d0c;--surface:#141312;--surface-2:#1a1917;--surface-3:#211f1d;
+  --border:#2a2826;--border-2:#353230;
+  --text:#e8e5e0;--text-2:#9a9690;--text-3:#5a5753;
+  --accent:#c8a96e;--accent-hover:#d9be88;--accent-dim:#3d3120;
+  --red:#c06060;--red-dim:#3d1f1f;
+  --green:#6aaa72;--green-dim:#1d3d20;
+  --blue:#6a9fd8;--blue-dim:#1d2f3d;
+  --purple:#9a7dcf;--purple-dim:#2a1f3d;
+  --orange:#d4834a;--orange-dim:#3d2210;
+  --teal:#5aaba8;--teal-dim:#1a3330;
+}
+[data-theme="light"]{
+  --bg:#f5f3ef;--surface:#faf9f6;--surface-2:#ffffff;--surface-3:#edeae4;
+  --border:#ddd9d2;--border-2:#ccc8c0;
+  --text:#1a1916;--text-2:#6a6660;--text-3:#aaa69f;
+  --accent:#8a6930;--accent-hover:#a07d3a;--accent-dim:#f0e8d5;
+  --red:#b84040;--red-dim:#fde8e8;
+  --green:#3a8a42;--green-dim:#e4f5e6;
+  --blue:#3a6faa;--blue-dim:#e0ecfa;
+  --purple:#6a4daf;--purple-dim:#ede8fa;
+  --orange:#b85a20;--orange-dim:#faeade;
+  --teal:#2a8a88;--teal-dim:#e0f4f3;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:3px}
+.app{display:flex;flex-direction:column;min-height:100vh}
+.header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100;gap:12px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{color:var(--accent)}
+.logo-title{font-size:.95rem;font-weight:700;letter-spacing:-.02em}
+.logo-sub{font-size:.68rem;color:var(--text-2);font-family:'Space Mono',monospace;margin-top:1px}
+.header-right{display:flex;align-items:center;gap:8px}
+.search-wrap{display:flex;align-items:center;gap:7px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:5px 11px}
+.search-wrap input{background:none;border:none;outline:none;font:inherit;font-size:.8rem;color:var(--text);width:150px}
+.search-wrap input::placeholder{color:var(--text-3)}
+.btn-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);color:var(--text-2);transition:all .15s}
+.btn-icon:hover{border-color:var(--border-2);color:var(--text)}
+.nav{display:flex;gap:2px;padding:0 24px;border-bottom:1px solid var(--border);background:var(--surface)}
+.nav-tab{padding:10px 15px;font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-3);border-bottom:2px solid transparent;transition:all .15s;cursor:pointer;white-space:nowrap}
+.nav-tab:hover{color:var(--text-2)}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.content-area{flex:1;padding:20px 24px;display:none}
+.content-area.active{display:block}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.section-head h2{font-size:1rem;font-weight:700}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.fb{padding:4px 11px;font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--border-2);border-radius:20px;color:var(--text-3);transition:all .15s}
+.fb:hover{border-color:var(--accent);color:var(--accent)}
+.fb.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:10px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:15px;cursor:pointer;transition:all .18s;position:relative}
+.card:hover{border-color:var(--border-2);background:var(--surface-2);transform:translateY(-1px)}
+.card.sel{border-color:var(--accent)!important;box-shadow:0 0 0 1px var(--accent)}
+.c-num{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--text-3);margin-bottom:5px}
+.c-title{font-size:.85rem;font-weight:700;line-height:1.3;margin-bottom:7px}
+.c-sum{font-size:.72rem;color:var(--text-2);line-height:1.5;margin-bottom:9px}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{padding:2px 7px;border-radius:4px;font-size:.62rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.badge{position:absolute;top:10px;right:10px;font-size:.58rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:4px;background:var(--surface-3);color:var(--text-3)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;backdrop-filter:blur(3px)}
+.overlay.open{display:flex;align-items:flex-start;justify-content:flex-end}
+.panel{width:min(500px,96vw);height:100vh;background:var(--surface);border-left:1px solid var(--border);overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:18px;position:relative}
+.close-btn{position:absolute;top:16px;right:16px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:7px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-2);font-size:.9rem;transition:all .15s}
+.close-btn:hover{background:var(--border);color:var(--text)}
+.p-num{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--accent);margin-bottom:2px}
+.p-title{font-size:1.2rem;font-weight:700;line-height:1.2;margin-bottom:3px}
+.p-type{font-size:.65rem;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em}
+.section-lbl{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:5px}
+.p-sum{font-size:.85rem;color:var(--text-2);line-height:1.6}
+.p-analysis{font-size:.8rem;color:var(--text);line-height:1.75;border-left:2px solid var(--accent-dim);padding-left:12px}
+.key-lines{display:flex;flex-direction:column;gap:7px}
+.kl{font-family:'Space Mono',monospace;font-size:.73rem;line-height:1.5;color:var(--accent);background:var(--accent-dim);padding:9px 12px;border-radius:6px;border-left:3px solid var(--accent)}
+.conns{display:flex;flex-wrap:wrap;gap:7px}
+.conn{padding:3px 9px;border-radius:6px;background:var(--surface-2);border:1px solid var(--border-2);font-size:.68rem;font-weight:600;color:var(--text-2);cursor:pointer;transition:all .15s}
+.conn:hover{border-color:var(--accent);color:var(--accent)}
+.notes-ta{width:100%;min-height:72px;background:var(--surface-2);border:1px solid var(--border);border-radius:7px;padding:9px 11px;font:inherit;font-size:.78rem;color:var(--text);resize:vertical;transition:border-color .15s;line-height:1.5}
+.notes-ta:focus{outline:none;border-color:var(--border-2)}
+.notes-ta::placeholder{color:var(--text-3)}
+/* Tag colors */
+.t-mask{background:var(--purple-dim);color:var(--purple)}
+.t-sophia{background:var(--teal-dim);color:var(--teal)}
+.t-survival{background:var(--green-dim);color:var(--green)}
+.t-grief{background:var(--blue-dim);color:var(--blue)}
+.t-suicide{background:var(--red-dim);color:var(--red)}
+.t-music{background:var(--orange-dim);color:var(--orange)}
+.t-love{background:var(--teal-dim);color:var(--teal)}
+.t-humor{background:var(--accent-dim);color:var(--accent)}
+.t-recovery{background:var(--green-dim);color:var(--green)}
+.t-identity{background:var(--purple-dim);color:var(--purple)}
+.t-loneliness{background:var(--blue-dim);color:var(--blue)}
+.t-darkness{background:var(--red-dim);color:var(--red)}
+.t-hope{background:var(--green-dim);color:var(--green)}
+.t-friendship{background:var(--orange-dim);color:var(--orange)}
+.t-loss{background:var(--blue-dim);color:var(--blue)}
+.t-memory{background:var(--purple-dim);color:var(--purple)}
+.t-philosophy{background:var(--accent-dim);color:var(--accent)}
+.t-fear{background:var(--red-dim);color:var(--red)}
+.t-acceptance{background:var(--green-dim);color:var(--green)}
+.t-anger{background:var(--red-dim);color:var(--red)}
+.t-courage{background:var(--orange-dim);color:var(--orange)}
+.t-resolution{background:var(--green-dim);color:var(--green)}
+.t-turning-point{background:var(--red-dim);color:var(--red)}
+.t-closure{background:var(--teal-dim);color:var(--teal)}
+.t-family{background:var(--blue-dim);color:var(--blue)}
+.t-release{background:var(--teal-dim);color:var(--teal)}
+.t-default{background:var(--surface-3);color:var(--text-2)}
+/* Arcs */
+.arcs-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.arc-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:18px}
+.arc-h{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.arc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.arc-n{font-size:.88rem;font-weight:700}
+.arc-d{font-size:.74rem;color:var(--text-2);line-height:1.55;margin-bottom:12px}
+.arc-bar{height:3px;background:var(--surface-3);border-radius:2px;overflow:hidden;margin-bottom:6px}
+.arc-fill{height:100%;border-radius:2px}
+.arc-meta{font-size:.64rem;color:var(--text-3);margin-bottom:10px}
+.arc-chips{display:flex;flex-wrap:wrap;gap:5px}
+.arc-chip{padding:3px 8px;border-radius:5px;font-size:.66rem;font-weight:600;cursor:pointer;transition:opacity .15s;border:1px solid transparent}
+.arc-chip:hover{opacity:.75}
+/* Symbols */
+.sym-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.sym-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
+.sym-icon{font-size:1.4rem;margin-bottom:8px}
+.sym-n{font-size:.85rem;font-weight:700;margin-bottom:5px}
+.sym-d{font-size:.74rem;color:var(--text-2);line-height:1.55;margin-bottom:10px}
+.sym-chips{display:flex;flex-wrap:wrap;gap:5px}
+.sym-chip{padding:3px 8px;background:var(--surface-2);border:1px solid var(--border-2);border-radius:4px;font-size:.64rem;color:var(--text-2);cursor:pointer;transition:all .15s}
+.sym-chip:hover{border-color:var(--accent);color:var(--accent)}
+/* Timeline */
+.tl{display:flex;flex-direction:column;max-width:660px;margin:0 auto}
+.tl-row{display:grid;grid-template-columns:60px 1fr;gap:14px;position:relative}
+.tl-row::before{content:'';position:absolute;left:59px;top:22px;bottom:-8px;width:1px;background:var(--border)}
+.tl-row:last-child::before{display:none}
+.tl-n{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--text-3);text-align:right;padding-top:16px}
+.tl-dot{width:7px;height:7px;border-radius:50%;background:var(--border-2);position:absolute;left:57px;top:20px;border:1px solid var(--bg)}
+.tl-body{padding:10px 0 18px}
+.tl-t{font-size:.83rem;font-weight:700;cursor:pointer;color:var(--text);transition:color .15s;margin-bottom:3px}
+.tl-t:hover{color:var(--accent)}
+.tl-l{font-size:.7rem;color:var(--text-2);line-height:1.5}
+.dot-turn{background:var(--accent)!important}
+.dot-sophia{background:var(--teal)!important}
+.dot-dark{background:var(--red)!important}
+.dot-green{background:var(--green)!important}
+@media(max-width:580px){
+  .header{padding:10px 14px}
+  .content-area{padding:14px}
+  .nav{padding:0 14px;overflow-x:auto}
+  .panel{width:100vw;height:100dvh}
+  .grid{grid-template-columns:1fr}
+  .search-wrap input{width:110px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="header">
+  <div class="logo">
+    <svg class="logo-mark" width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <circle cx="13" cy="13" r="9" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M8.5 17 Q13 7 17.5 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <circle cx="13" cy="11" r="1.5" fill="currentColor"/>
+    </svg>
+    <div>
+      <div class="logo-title">Notorious Bale</div>
+      <div class="logo-sub">Lyric Analysis Board · 36 tracks</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="search-wrap">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="si" placeholder="Поиск...">
+    </div>
+    <button class="btn-icon" id="themeBtn" title="Тема">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+<nav class="nav">
+  <div class="nav-tab active" data-tab="tracks">Треки</div>
+  <div class="nav-tab" data-tab="arcs">Арки</div>
+  <div class="nav-tab" data-tab="symbols">Символы</div>
+  <div class="nav-tab" data-tab="timeline">Таймлайн</div>
+</nav>
+<div class="content-area active" id="tab-tracks">
+  <div class="section-head">
+    <h2>Треки <span id="cnt" style="color:var(--text-2);font-size:.8rem;font-weight:400"></span></h2>
+    <div class="filters" id="filters">
+      <button class="fb active" data-f="all">Все</button>
+      <button class="fb" data-f="sophia">Sofya</button>
+      <button class="fb" data-f="suicide">Тёмная арка</button>
+      <button class="fb" data-f="mask">Маска</button>
+      <button class="fb" data-f="recovery">Выживание</button>
+      <button class="fb" data-f="music">Музыка</button>
+      <button class="fb" data-f="grief">Горе</button>
+    </div>
+  </div>
+  <div class="grid" id="tgrid"></div>
+</div>
+<div class="content-area" id="tab-arcs"><div class="arcs-g" id="arcg"></div></div>
+<div class="content-area" id="tab-symbols"><div class="sym-g" id="symg"></div></div>
+<div class="content-area" id="tab-timeline"><div class="tl" id="tlel"></div></div>
+</div>
+<div class="overlay" id="ov">
+  <div class="panel" id="panel">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <div id="pcontent"></div>
+  </div>
+</div>
+<script>
+const T=[
+  {
+    "num": 1,
+    "title": "Introduction to Notorious Bale",
+    "type": "skit",
+    "lang": "ru",
+    "summary": "Кино-пролог. Псевдо-титры к «фильму» — представление маски Notorious Bale как персонажа.",
+    "themes": [
+      "mask",
+      "intro"
+    ],
+    "key_lines": [
+      "Производство Ласиурус Рекордс",
+      "Подвид волосатохвостой летучей мышки. Ноторуис Бэйл",
+      "Композитор: Килл Бонти"
+    ],
+    "analysis": "Театральный зачин альбома. Маска представлена как кинематографический персонаж ещё до первой строчки рэпа — альбом объявляет себя «фильмом». Псевдоним вынесен как роль, а не личность.",
+    "connections": [
+      11,
+      2
+    ]
+  },
+  {
+    "num": 2,
+    "title": "How much time is he spending on the Intro?",
+    "type": "track",
+    "lang": "en",
+    "summary": "Первый настоящий трек — рэп-поток в 00:33 ночи. Одиночество, неопределённость цели записи. Первый намёк на страх перед сном.",
+    "themes": [
+      "loneliness",
+      "music",
+      "survival"
+    ],
+    "key_lines": [
+      "Maybe, it's 'sposed to be some 'so long' and shit",
+      "I might sleep / But I'm scared of the nightmares that I might see",
+      "The sun is rising above the horizon as I spit"
+    ],
+    "analysis": "Ключевая двусмысленность: 'so long' и 'it's over' — прощание с людьми или что-то большее? Страх сна = первый суицидальный намёк. 'The sun is rising' — первое появление сквозного символа рассвета.",
+    "connections": [
+      15,
+      21,
+      23
+    ]
+  },
+  {
+    "num": 3,
+    "title": "No Matter (feat. Faraway)",
+    "type": "track",
+    "lang": "bilingual",
+    "summary": "Дуэт о темноте и невозможности найти свет. Faraway на русском озвучивает то, что Las не может сказать прямо.",
+    "themes": [
+      "darkness",
+      "survival",
+      "friendship"
+    ],
+    "key_lines": [
+      "No matter how loud I will talk / It will never gonna be enough",
+      "I really wanna live here / But I am forced to roam in this dark town",
+      "Ya by usnul navsegda, no bessonnitza"
+    ],
+    "analysis": "Faraway озвучивает суицидальную тьму. Las во втором куплете включает защитную маску. Зеркальная структура: два голоса — одна боль.",
+    "connections": [
+      15,
+      7,
+      14
+    ]
+  },
+  {
+    "num": 4,
+    "title": "Shabby Jeans, Dirty Shoes",
+    "type": "track",
+    "lang": "en",
+    "summary": "Verse I — маска/бравада, Verse II — 'I don't wanna be alone'. Сниттер в финале: смерть из сна как страх потери контроля.",
+    "themes": [
+      "mask",
+      "loneliness",
+      "survival"
+    ],
+    "key_lines": [
+      "I feigned that I'm fine, but truly I don't wanna be alone",
+      "I put on a mask with a smile above the sorry flews",
+      "The sun is rising above the horizon"
+    ],
+    "analysis": "Точнейшее описание механизма маски: Verse I — агрессия, Verse II — реальность. 'The sun is rising' снова, но без надежды. Сниттер про смерть во сне = страх потери контроля.",
+    "connections": [
+      11,
+      15,
+      2
+    ]
+  },
+  {
+    "num": 5,
+    "title": "Prometheus (feat. Faraway)",
+    "type": "track",
+    "lang": "en",
+    "summary": "Рэп от третьего лица — Las описывает себя как 'он'. Первое сомнение: 'He doesn't know what Lasiurus is yet'.",
+    "themes": [
+      "music",
+      "identity",
+      "mask"
+    ],
+    "key_lines": [
+      "He doesn't know what Lasiurus is yet",
+      "Why do I feel like Prometheus? / Why do I feel like the fire's rogue?",
+      "He thinks that Las is a person"
+    ],
+    "analysis": "Третье лицо = дистанция как защита. Prometheus: дал огонь людям — наказан. Verse III — главное: псевдоним это конструкт, а не человек.",
+    "connections": [
+      11,
+      12,
+      1
+    ]
+  },
+  {
+    "num": 6,
+    "title": "Rap Essay",
+    "type": "track",
+    "lang": "en",
+    "summary": "Утренний поток сознания — дисс на беспредметный рэп, студийная байка с Faraway. Юмор как разгрузка.",
+    "themes": [
+      "music",
+      "humor",
+      "friendship"
+    ],
+    "key_lines": [
+      "Be the meanest person in the room if you can't be the coolest",
+      "Rap music's nothing to do with you / Barely you's in"
+    ],
+    "analysis": "Под насмешками — реальный манифест ценностей: слова важнее мелодии, смысл важнее хайпа. Первое упоминание Emma.",
+    "connections": [
+      8,
+      7,
+      12
+    ]
+  },
+  {
+    "num": 7,
+    "title": "Another One (feat. Faraway)",
+    "type": "track",
+    "lang": "en",
+    "summary": "'Two years later I'm clean.' Первый сигнал выживания. Признание: помогать другим, не ожидая ничего взамен.",
+    "themes": [
+      "survival",
+      "recovery",
+      "friendship"
+    ],
+    "key_lines": [
+      "Two years later I'm clean, but something is worrying me",
+      "Like, fuck the song, it's a message / Like, being naked at home",
+      "One another shot to be another man"
+    ],
+    "analysis": "'One another shot to be another man' — о желании начать заново. Алкоголь упомянут впервые прямо. 'It's true, I'm talking to myself' = самотерапевтическая функция альбома.",
+    "connections": [
+      8,
+      15,
+      19
+    ]
+  },
+  {
+    "num": 8,
+    "title": "Porridge (feat. Faraway)",
+    "type": "track",
+    "lang": "en",
+    "summary": "Злой дисс на Emma — за которым скрывается реальная боль. Юмор как броня.",
+    "themes": [
+      "humor",
+      "relationships",
+      "mask"
+    ],
+    "key_lines": [
+      "Emma's comer / Forty minutes later Emma's the leaver",
+      "I can't count on you",
+      "And I'm feeling good"
+    ],
+    "analysis": "Emma — первый именованный женский персонаж. Angry bravado маскирует уязвимость. 'And I'm feeling good' в аутро — классический защитный рефрен.",
+    "connections": [
+      6,
+      9,
+      19
+    ]
+  },
+  {
+    "num": 9,
+    "title": "Theatre",
+    "type": "track",
+    "lang": "en",
+    "summary": "Анестезия через рутину. FIFA, кола, тело отказывается уходить. Жизнь как скучный спектакль.",
+    "themes": [
+      "apathy",
+      "survival",
+      "loneliness"
+    ],
+    "key_lines": [
+      "This life is boring / And you know it",
+      "I was gonna leave / But my body's unfit for going"
+    ],
+    "analysis": "Пассивная суицидальность — не острый кризис, а хроническое истощение. 'I was gonna leave' — буквально о желании уйти. Предшествует Incomplete хронологически.",
+    "connections": [
+      15,
+      4,
+      8
+    ]
+  },
+  {
+    "num": 10,
+    "title": "Freedom // Rap Draft",
+    "type": "track",
+    "lang": "en",
+    "summary": "Философский трек о свободе + импровизационный манифест. Шрёдингеровская кошка = жизнь между жизнью и смертью.",
+    "themes": [
+      "music",
+      "philosophy",
+      "identity"
+    ],
+    "key_lines": [
+      "Freedom is responsibility not driven by law / But driven by your mental abilities",
+      "Freedom is a Schroedinger's cat"
+    ],
+    "analysis": "Свобода — контрапункт к ощущению ловушки. Шрёдингер = foreshadowing финального выбора. Part 2 — живой фристайл.",
+    "connections": [
+      22,
+      12,
+      5
+    ]
+  },
+  {
+    "num": 11,
+    "title": "Notorious Bale",
+    "type": "track",
+    "lang": "en",
+    "summary": "Заглавный трек — максимальная маска. Хаотичная энергия. Скрывает весь внутренний мир альбома.",
+    "themes": [
+      "mask",
+      "music",
+      "identity"
+    ],
+    "key_lines": [
+      "I am the product of Joy Division, Pink Floyd, Slim and K.Dot, Hans Zimmer, J. Cole",
+      "I never gave a shit",
+      "Science... Stonks..."
+    ],
+    "analysis": "'I never gave a shit' — прямая ложь. Человек, написавший Incomplete, даёт shit абсолютно обо всём. 'Science' в интро = 'Science' в аутро — замыкание иллюзии.",
+    "connections": [
+      1,
+      23,
+      5,
+      4
+    ]
+  },
+  {
+    "num": 12,
+    "title": "Revelation 1.0 (Genre)",
+    "type": "track",
+    "lang": "en",
+    "summary": "Манифест о хип-хопе без припева. 'I had to kill that Richard Knight shit to make some music'.",
+    "themes": [
+      "music",
+      "identity",
+      "philosophy"
+    ],
+    "key_lines": [
+      "I had to kill that Richard Knight shit",
+      "Now I shout at the world / But you won't reply to me"
+    ],
+    "analysis": "Единственный трек без хора = максимальная честность. Richard Knight — прежний псевдоним, убитый ради Lasiurus. Буквально смена идентичности.",
+    "connections": [
+      5,
+      10,
+      1
+    ]
+  },
+  {
+    "num": 13,
+    "title": "So Far, Pt. 1",
+    "type": "track",
+    "lang": "en",
+    "summary": "Первое появление Sofya. Любовь как восхищение издалека — он даже не может дописать мысль.",
+    "themes": [
+      "sophia",
+      "love",
+      "fear"
+    ],
+    "key_lines": [
+      "I think I love you so much it hurts",
+      "So far I can't sing this song",
+      "I can relate to Radiohead's 'Creep'"
+    ],
+    "analysis": "Самосаботаж: 'I ain't never gonna get her' произносится до любой попытки. Аутро разрушает защиту. Creep = идеальная отсылка к паттерну самоуничижения.",
+    "connections": [
+      20,
+      16,
+      34,
+      22
+    ]
+  },
+  {
+    "num": 14,
+    "title": "A mozhet potomu chto...",
+    "type": "track",
+    "lang": "ru",
+    "summary": "Единственный русскоязычный сольный трек. Осень, перелёт, отчуждение, смерть товарища.",
+    "themes": [
+      "loss",
+      "identity",
+      "loneliness"
+    ],
+    "key_lines": [
+      "A mozhet, potomu chto ya kak robot?",
+      "A mozhet byt, otkinulsya eshche odin tovarishch moy?",
+      "Fotorobot zasratogo dnya"
+    ],
+    "analysis": "Русский язык = снятая маска английского. 'Фоторобот засратого дня' — один из честнейших образов альбома. Горе как сквозная тема.",
+    "connections": [
+      15,
+      3,
+      7
+    ]
+  },
+  {
+    "num": 15,
+    "title": "Incomplete",
+    "type": "track",
+    "lang": "en",
+    "summary": "Самый тёмный трек. Смерть дедушки. Суицидальные образы — верёвка, балкон 19-го этажа. 'This is the darkest one.'",
+    "themes": [
+      "grief",
+      "survival",
+      "suicide"
+    ],
+    "key_lines": [
+      "I'll never be the same without my granddad / My only real friend before I met Faraway",
+      "Or it can be my Plan B with a balcony / 19th floor",
+      "I ain't feeling blue inside when I lie in the dark imagining different ways of suicide"
+    ],
+    "analysis": "Балкон — Plan B здесь, Plan A в TheStory. Дедушка = единственный друг до Faraway — меняет всю роль Faraway в альбоме. Joy Division и Pink Floyd как soundtrack.",
+    "connections": [
+      22,
+      2,
+      21,
+      14
+    ]
+  },
+  {
+    "num": 16,
+    "title": "Wisdom, Pt. 1",
+    "type": "track",
+    "lang": "en",
+    "summary": "Сознательный отказ от признания Sofye. 'I am craving for dying / But also craving for you' — в одной строке.",
+    "themes": [
+      "sophia",
+      "love",
+      "restraint"
+    ],
+    "key_lines": [
+      "I am craving for dying / But also craving for you",
+      "I know we both don't need that mess of a relationship",
+      "You are appreciated"
+    ],
+    "analysis": "Ключевой момент: любовь и смерть существуют одновременно. Отказ действовать — не трусость, а забота: он не хочет приходить к ней из такого mindset.",
+    "connections": [
+      29,
+      13,
+      34,
+      20
+    ]
+  },
+  {
+    "num": 17,
+    "title": "Wack Song",
+    "type": "track",
+    "lang": "en",
+    "summary": "Самоирония. 'Я делаю дерьмовую песню.' Хронология: 10 лет поэзии + 6 лет рэпа.",
+    "themes": [
+      "humor",
+      "music",
+      "self-awareness"
+    ],
+    "key_lines": [
+      "I'm making a wack song, making a wack song",
+      "I spent the last decade writing poems / Last six years it's raps"
+    ],
+    "analysis": "Метатрек о процессе создания рэпа. 10 лет поэзии объясняют плотность текстов. Юмор как передышка.",
+    "connections": [
+      6,
+      18,
+      10
+    ]
+  },
+  {
+    "num": 18,
+    "title": "Rap Machine",
+    "type": "track",
+    "lang": "en",
+    "summary": "Ярость за правом на голос. Акцент как маркер чужеродности. Переработанная старая песня.",
+    "themes": [
+      "music",
+      "identity",
+      "anger"
+    ],
+    "key_lines": [
+      "All my life I want a fuckin' mic",
+      "Las has gone insane? Yeah. Las is so insane!",
+      "I'm a Rap Machine"
+    ],
+    "analysis": "Акцент ('it's an accent I'm cursed with') — реальная боль за агрессией. 'Las has gone insane' предвосхищает срыв в TheStory.",
+    "connections": [
+      11,
+      22,
+      12
+    ]
+  },
+  {
+    "num": 19,
+    "title": "The Tape Memoirs // 2020 N.O.",
+    "type": "track",
+    "lang": "en",
+    "summary": "Хроника: 2014 Москва — 2018 The Tape — 2020 Северная Осетия. История дружбы с Faraway.",
+    "themes": [
+      "friendship",
+      "memory",
+      "music"
+    ],
+    "key_lines": [
+      "I remember 2014 / Moscow city",
+      "Many punchlines on The Tape / But they're in English, y'all don't know it"
+    ],
+    "analysis": "Автобиографический якорь для временных слоёв альбома. Faraway как исторический персонаж. Финал ведёт к So Far Pt. 2.",
+    "connections": [
+      7,
+      20,
+      8
+    ]
+  },
+  {
+    "num": 20,
+    "title": "So Far, Pt. 2",
+    "type": "track",
+    "lang": "en",
+    "summary": "2020. Самое длинное и уязвимое признание Sofye, которой он никогда не отправит.",
+    "themes": [
+      "sophia",
+      "love",
+      "fear"
+    ],
+    "key_lines": [
+      "I've been thinking about you for more than a year",
+      "I adore you and I hope to God I don't meet you",
+      "She walks in starlight in another world"
+    ],
+    "analysis": "LOTR-отсылка (Арвен) — Sofya переведена в другое измерение. Paradox: встреча страшнее тоски. Coldplay 'What If', Arctic Monkeys 'Do I Wanna Know'.",
+    "connections": [
+      13,
+      16,
+      34,
+      33
+    ]
+  },
+  {
+    "num": 21,
+    "title": "Two Wagtail Birds",
+    "type": "track",
+    "lang": "en",
+    "summary": "Депрессия в движении. Птицы в парке — символ желания свободы. Первое 'I'm gonna manage' — начало разворота.",
+    "themes": [
+      "survival",
+      "grief",
+      "hope"
+    ],
+    "key_lines": [
+      "Wish I had wings, so I'd open 'em wide / And fly (away)",
+      "I know that I'm kinda depressed / But I'm gonna manage in time by myself"
+    ],
+    "analysis": "Трясогузки — символ весны и возвращения. Желание улететь = пассивная суицидальность, но с оговоркой 'I'm gonna manage'. Начало разворота.",
+    "connections": [
+      15,
+      22,
+      23,
+      2
+    ]
+  },
+  {
+    "num": 22,
+    "title": "TheStoryofaLeglessFrenchman",
+    "type": "track",
+    "lang": "en",
+    "summary": "Кульминация суицидальной арки. Балкон. 'But not with this mindset' — решение остаться. Польнарефф как спасительный абсурд.",
+    "themes": [
+      "suicide",
+      "survival",
+      "turning-point"
+    ],
+    "key_lines": [
+      "If this song is never recorded then it isn't written — And if it isn't written then the man departed",
+      "I decided that I should take a deep breath",
+      "But not with this mindset"
+    ],
+    "analysis": "Сам факт существования трека — доказательство выживания. Польнарефф (JoJo) — абсурдный комизм как антидот к смерти. Отвечает на Wisdom Pt.1 'I am craving for dying'.",
+    "connections": [
+      15,
+      16,
+      21,
+      23,
+      13
+    ]
+  },
+  {
+    "num": 23,
+    "title": "Some Piano Joint",
+    "type": "track",
+    "lang": "en",
+    "summary": "Финальная точка внутреннего путешествия. Маска снята. 'I gotta survive'. Последнее слово — 'Georik, idyosh?'",
+    "themes": [
+      "survival",
+      "recovery",
+      "identity",
+      "hope"
+    ],
+    "key_lines": [
+      "I gotta survive",
+      "I won't disappear",
+      "I bought a cheap decent microphone / Guess, I'mma be okay",
+      "Georik, idyosh?"
+    ],
+    "analysis": "'Георик' — реальное имя вслух впервые. Альбом начинается с 'Science / Shut up', заканчивается нежным вопросом. Покупка микрофона — конкретный возврат к жизни.",
+    "connections": [
+      2,
+      11,
+      22,
+      21,
+      24
+    ]
+  },
+  {
+    "num": 24,
+    "title": "Jiko no ukeire (intermezzo)",
+    "type": "instrumental",
+    "lang": "ja",
+    "summary": "Инструментал. Мотив из интро в оркестровой аранжировке. Название: 'Принятие себя'.",
+    "themes": [
+      "identity",
+      "acceptance"
+    ],
+    "key_lines": [
+      "Jiko no ukeire = Принятие себя",
+      "Скрипки, кларнет, духовые"
+    ],
+    "analysis": "Переломный момент альбома после Some Piano Joint. Мотив из Introduction возвращается с другим смыслом. Японское название = дистанция и универсальность темы.",
+    "connections": [
+      1,
+      23,
+      25
+    ]
+  },
+  {
+    "num": 25,
+    "title": "Worth",
+    "type": "track",
+    "lang": "en",
+    "summary": "Первый трек после перелома. 'My friend told me this life is really worth living.'",
+    "themes": [
+      "recovery",
+      "hope",
+      "sophia"
+    ],
+    "key_lines": [
+      "My friend told me this life is really worth living",
+      "You're a part of mine",
+      "I'm choosing to carry on"
+    ],
+    "analysis": "Тема 'worth' прямо отвечает на суицидальные мысли первой части. Первый трек, где будущее не пугает. Sofya как мотивация к изменению.",
+    "connections": [
+      22,
+      23,
+      34,
+      16
+    ]
+  },
+  {
+    "num": 26,
+    "title": "NH4NO3",
+    "type": "track",
+    "lang": "en",
+    "summary": "Взрыв в Бейруте как метафора денежной системы. В финале — Sofya снова даёт смысл жить.",
+    "themes": [
+      "philosophy",
+      "sophia",
+      "recovery"
+    ],
+    "key_lines": [
+      "You might say it was ammonia-nitrate that destroyed Beirut",
+      "Then I think of Sofia / And everything just falls into place",
+      "I'm sorry for the both of us"
+    ],
+    "analysis": "Внешний хаос (2020, Бейрут, COVID) против внутреннего якоря (Sofya). Политический анализ переходит в личное — Sofya останавливает глобальную тревогу.",
+    "connections": [
+      25,
+      29,
+      35
+    ]
+  },
+  {
+    "num": 27,
+    "title": "Spirit",
+    "type": "track",
+    "lang": "en",
+    "summary": "Рассвет после ночи. 'The dawn has come, I know I'm fine.' Первый трек без тени суицидального подтекста.",
+    "themes": [
+      "recovery",
+      "hope",
+      "survival"
+    ],
+    "key_lines": [
+      "I got a spirit and it's yearning to light",
+      "The dawn has come upon this place / I know I'm fine",
+      "My darkest nights are gone, I hope"
+    ],
+    "analysis": "Образ рассвета переосмыслен — теперь спасительный, а не пугающий. 'I'm going to stay' — прямой контраст с Theatre 'I was gonna leave'. Будущее по-настоящему открыто.",
+    "connections": [
+      15,
+      21,
+      22,
+      25
+    ]
+  },
+  {
+    "num": 28,
+    "title": "Confessor",
+    "type": "track",
+    "lang": "en",
+    "summary": "Признание через повторяющийся ритуал. 'Says a girl I adore, I know.' Confessor = тот, кто исповедуется.",
+    "themes": [
+      "sophia",
+      "love",
+      "courage"
+    ],
+    "key_lines": [
+      "Imma confess / Cause I'm a confessor",
+      "Says a girl I adore / I know"
+    ],
+    "analysis": "Трек-мантра: повторение как механизм присвоения мужества. Confessor = тот, кто признаётся — хотя бы себе.",
+    "connections": [
+      16,
+      29,
+      31
+    ]
+  },
+  {
+    "num": 29,
+    "title": "Wisdom, Pt. 2",
+    "type": "track",
+    "lang": "en",
+    "summary": "Имя произнесено вслух: 'Now I let the Universe see, Sophie.' До этого — только Бог слышал.",
+    "themes": [
+      "sophia",
+      "love",
+      "release"
+    ],
+    "key_lines": [
+      "Now I let the Universe see, Sophie",
+      "Only God heard your name / When I whispered",
+      "I dedicated so many songs to one specified somebody"
+    ],
+    "analysis": "Тихая революция: до этого только Бог слышал имя, теперь — Вселенная. Выживший человек позволяет себе чувство. Отвечает на Wisdom Pt.1.",
+    "connections": [
+      16,
+      34,
+      22,
+      25
+    ]
+  },
+  {
+    "num": 30,
+    "title": "Uncle",
+    "type": "track",
+    "lang": "ru/en",
+    "summary": "Трек о дяде, 2021. Личная потеря, горе через воспоминание.",
+    "themes": [
+      "loss",
+      "grief",
+      "family"
+    ],
+    "key_lines": [
+      "Uncle",
+      "2021"
+    ],
+    "analysis": "Ещё одна личная потеря после дедушки (Incomplete) и товарища (трек 14). Горе как сквозная тема второй части, но теперь с опорой на выживание.",
+    "connections": [
+      15,
+      14,
+      27
+    ]
+  },
+  {
+    "num": 31,
+    "title": "Love, doubts & nunchucks",
+    "type": "track",
+    "lang": "en",
+    "summary": "Робкая, но реальная попытка подойти ближе. 'I gotta try it my way.' Первый трек, где страх не побеждает.",
+    "themes": [
+      "sophia",
+      "love",
+      "courage"
+    ],
+    "key_lines": [
+      "I gotta try it my way",
+      "My fault I've been holding back a million years",
+      "Or you could knock me out with nunchucks"
+    ],
+    "analysis": "Нунчаки — абсурдный образ, смягчающий уязвимость. Храбрость через юмор. В So Far Pt.1 он не мог дописать мысль — здесь хотя бы ставит вопрос.",
+    "connections": [
+      13,
+      20,
+      34,
+      29
+    ]
+  },
+  {
+    "num": 32,
+    "title": "Yawdah",
+    "type": "track",
+    "lang": "en",
+    "summary": "Самый технически насыщенный трек. Yoda рэпа. Крёстный в аварии. Финальное 'The sun is rising' — символ зрелости.",
+    "themes": [
+      "music",
+      "identity",
+      "loss"
+    ],
+    "key_lines": [
+      "The Yoda of Hip-hop, I am",
+      "My pen is the ship, the immensity of feeling's the sea",
+      "The sun is rising above the horizon as I spit"
+    ],
+    "analysis": "Последнее появление мотива 'The sun is rising' — теперь зрелость, а не бессонница. Смерть крёстного = чужие планы на жизнь. Принятие своего пути.",
+    "connections": [
+      2,
+      11,
+      23,
+      10
+    ]
+  },
+  {
+    "num": 33,
+    "title": "It's Wonderful to Grow Up",
+    "type": "instrumental",
+    "lang": "mixed",
+    "summary": "Инструментал: электрогитара Las + флейта Faraway. Название цитирует Sofyu — она не знает.",
+    "themes": [
+      "sophia",
+      "friendship",
+      "acceptance"
+    ],
+    "key_lines": [
+      "Название цитирует Sofyu",
+      "Elektrogitara + fleyta Faraway"
+    ],
+    "analysis": "Тайная цитата Sofyi — финальный негромкий жест любовной арки. Дуэт с Faraway: самый близкий друг и человек, давший смысл продолжать. Флейта + гитара = принятие противоречий.",
+    "connections": [
+      20,
+      34,
+      7,
+      29
+    ]
+  },
+  {
+    "num": 34,
+    "title": "ENIVID-19",
+    "type": "track",
+    "lang": "en",
+    "summary": "Финальное признание Sofye. COVID как фон. Нарисованный портрет и альбом вручены ей. 'Now I'm out of fear.'",
+    "themes": [
+      "sophia",
+      "love",
+      "courage",
+      "resolution"
+    ],
+    "key_lines": [
+      "Now I'm out of fear",
+      "You're everything to me / And you don't owe me nothing",
+      "I drew a picture of you",
+      "Since 2019, I guess"
+    ],
+    "analysis": "COVID = ENIVID (наоборот). Финал любовной арки: альбом написан ради неё, вручён ей. 'You don't owe me nothing' — безусловная любовь. 'Now I'm out of fear' — ответ на весь альбом.",
+    "connections": [
+      13,
+      20,
+      29,
+      31,
+      22
+    ]
+  },
+  {
+    "num": 35,
+    "title": "No More Trippin'",
+    "type": "track",
+    "lang": "bilingual",
+    "summary": "Финальная декларация: 'I am the adult now.' Человек, переживший всё, выбирает продолжать.",
+    "themes": [
+      "recovery",
+      "music",
+      "acceptance"
+    ],
+    "key_lines": [
+      "No more tripping - stop, stop / I am the adult now",
+      "I won't stop till I am crowned",
+      "Da k chortu eto vse..."
+    ],
+    "analysis": "'Да к черту это все' — не капитуляция, а усталое принятие. Он взрослый. Он выжил. Он всё ещё рэпер. Прощание с тревогой как доминирующим состоянием.",
+    "connections": [
+      23,
+      32,
+      7,
+      11
+    ]
+  },
+  {
+    "num": 36,
+    "title": "Fin.",
+    "type": "instrumental",
+    "lang": "—",
+    "summary": "Инструментал в стиле Wild West OST. Электрогитара, скрипка, духовые. Финальные титры — герой уходит в закат.",
+    "themes": [
+      "acceptance",
+      "closure"
+    ],
+    "key_lines": [
+      "Wild West OST",
+      "Fin."
+    ],
+    "analysis": "Wild West = одиночество и открытая дорога. После всей боли — тишина вестерна: выжил, свободен, путь открыт. Зеркало трека 1: тогда — кино-пролог, теперь — финальные титры.",
+    "connections": [
+      35,
+      1,
+      23
+    ]
+  }
+];
+
+const NOTES={};
+const TM={'mask':'Маска','sophia':'Sofya','survival':'Выживание','grief':'Горе','suicide':'Тёмная арка','music':'Музыка','love':'Любовь','humor':'Юмор','intro':'Интро','recovery':'Восстановление','identity':'Идентичность','loneliness':'Одиночество','darkness':'Тьма','hope':'Надежда','friendship':'Дружба','loss':'Потеря','memory':'Память','philosophy':'Философия','apathy':'Апатия','fear':'Страх','restraint':'Сдержанность','acceptance':'Принятие','anger':'Злость','release':'Освобождение','courage':'Смелость','resolution':'Развязка','turning-point':'Перелом','closure':'Финал','family':'Семья','self-awareness':'Самоосознание','relationships':'Отношения'};
+
+function tc(t){return 't-'+(t in TM?t:'default');}
+function tl(t){return TM[t]||t;}
+
+function renderTracks(f='all',q=''){
+  const g=document.getElementById('tgrid');
+  const c=document.getElementById('cnt');
+  const rows=T.filter(t=>{
+    if(f!=='all'&&!t.themes.includes(f))return false;
+    if(q){const qq=q.toLowerCase();return t.title.toLowerCase().includes(qq)||t.summary.toLowerCase().includes(qq)||t.analysis.toLowerCase().includes(qq);}
+    return true;
+  });
+  c.textContent=`(${rows.length})`;
+  g.innerHTML=rows.map(t=>`
+    <div class="card" data-num="${t.num}" onclick="openD(${t.num})">
+      ${t.type!=='track'?`<div class="badge">${t.type==='skit'?'Skit':t.type==='instrumental'?'Instr.':t.type}</div>`:''}
+      <div class="c-num">T${String(t.num).padStart(2,'0')} · ${t.lang.toUpperCase()}</div>
+      <div class="c-title">${t.title}</div>
+      <div class="c-sum">${t.summary}</div>
+      <div class="tags">${t.themes.map(x=>`<span class="tag ${tc(x)}">${tl(x)}</span>`).join('')}</div>
+    </div>`).join('');
+}
+
+function openD(num){
+  const t=T.find(x=>x.num===num);
+  if(!t)return;
+  const p=document.getElementById('pcontent');
+  const conns=t.connections.map(n=>{
+    const ct=T.find(x=>x.num===n);
+    return ct?`<button class="conn" onclick="openD(${n})">→ ${n}. ${ct.title.length>22?ct.title.slice(0,22)+'…':ct.title}</button>`:'';
+  }).join('');
+  const typeMap={skit:'Skit / Intro',instrumental:'Instrumental 🎵',track:'Track',bilingual:'Bilingual Track',unknown:'?'};
+  p.innerHTML=`
+    <div class="p-num">ТРЕК ${String(t.num).padStart(2,'0')} · ${t.lang.toUpperCase()}</div>
+    <div class="p-title">${t.title}</div>
+    <div class="p-type">${typeMap[t.type]||t.type}</div>
+    <div class="tags" style="margin-top:10px">${t.themes.map(x=>`<span class="tag ${tc(x)}">${tl(x)}</span>`).join('')}</div>
+    <div><div class="section-lbl">Суть трека</div><div class="p-sum">${t.summary}</div></div>
+    ${t.key_lines.length?`<div><div class="section-lbl">Ключевые строки</div><div class="key-lines">${t.key_lines.map(l=>`<div class="kl">${l}</div>`).join('')}</div></div>`:''}
+    ${t.analysis&&t.analysis.length>20?`<div><div class="section-lbl">Анализ</div><div class="p-analysis">${t.analysis}</div></div>`:''}
+    ${conns?`<div><div class="section-lbl">Связи</div><div class="conns">${conns}</div></div>`:''}
+    <div><div class="section-lbl">Твои заметки</div><textarea class="notes-ta" id="na${num}" placeholder="Добавь своё…" oninput="NOTES[${num}]=this.value">${NOTES[num]||''}</textarea></div>
+  `;
+  document.getElementById('ov').classList.add('open');
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('sel'));
+  t.connections.forEach(n=>{const e=document.querySelector(`.card[data-num="${n}"]`);if(e)e.classList.add('sel');});
+}
+
+document.getElementById('closeBtn').onclick=()=>{
+  document.getElementById('ov').classList.remove('open');
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('sel'));
+};
+document.getElementById('ov').addEventListener('click',e=>{
+  if(e.target===document.getElementById('ov')){
+    document.getElementById('ov').classList.remove('open');
+    document.querySelectorAll('.card').forEach(c=>c.classList.remove('sel'));
+  }
+});
+
+let cf='all',cq='';
+document.getElementById('filters').addEventListener('click',e=>{
+  const b=e.target.closest('.fb');if(!b)return;
+  document.querySelectorAll('.fb').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');cf=b.dataset.f;renderTracks(cf,cq);
+});
+document.getElementById('si').addEventListener('input',e=>{cq=e.target.value;renderTracks(cf,cq);});
+
+// NAV
+document.querySelectorAll('.nav-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.content-area').forEach(c=>c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-'+tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ARCS
+const ARCS=[
+  {name:'Маска / Notorious Bale',color:'var(--purple)',desc:'Маска как защита, самопрезентация и тюрьма. NB — персонаж, скрывающий реального Георгия.',tracks:[1,4,5,11,12,17,18]},
+  {name:'Суицидальная арка',color:'var(--red)',desc:'От пассивного желания исчезнуть к острому кризису и решению остаться. Самая тёмная нить.',tracks:[2,9,15,16,21,22]},
+  {name:'Арка Sofya',color:'var(--teal)',desc:'Восхищение издалека, молчание как защита, наконец — признание. Любовь как причина выжить.',tracks:[13,16,20,25,26,28,29,31,33,34]},
+  {name:'Горе и потери',color:'var(--blue)',desc:'Дедушка, товарищ, дядя — горе как постоянный фон, который автор учится нести.',tracks:[3,7,14,15,30]},
+  {name:'Музыка как выживание',color:'var(--orange)',desc:'Рэп и письмо как единственный способ справляться. Создание альбома = терапия.',tracks:[2,5,6,10,12,17,18,19,35]},
+  {name:'Восстановление',color:'var(--green)',desc:'Постепенный путь из глубины к поверхности. Трезвость, принятие, возвращение к жизни.',tracks:[7,22,23,24,25,26,27,35]},
+];
+
+function goTrack(n){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.content-area').forEach(c=>c.classList.remove('active'));
+  document.querySelector('[data-tab="tracks"]').classList.add('active');
+  document.getElementById('tab-tracks').classList.add('active');
+  setTimeout(()=>openD(n),80);
+}
+
+function renderArcs(){
+  const g=document.getElementById('arcg');
+  g.innerHTML=ARCS.map(a=>{
+    const pct=Math.round(a.tracks.length/36*100);
+    return `<div class="arc-card">
+      <div class="arc-h"><div class="arc-dot" style="background:${a.color}"></div><div class="arc-n">${a.name}</div></div>
+      <div class="arc-d">${a.desc}</div>
+      <div class="arc-bar"><div class="arc-fill" style="width:${pct}%;background:${a.color}"></div></div>
+      <div class="arc-meta">${a.tracks.length} треков · ${pct}%</div>
+      <div class="arc-chips">${a.tracks.map(n=>{const t=T.find(x=>x.num===n);return t?`<button class="arc-chip" style="background:${a.color}22;border-color:${a.color}55;color:${a.color}" onclick="goTrack(${n})">${n}. ${t.title.length>16?t.title.slice(0,16)+'…':t.title}</button>`:''}).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+// SYMBOLS
+const SYMS=[
+  {icon:'🌅',name:'The sun is rising above the horizon',desc:'Мотив рассвета — самый важный сквозной образ. В начале = бессонница и страх, в финале = зрелость и принятие.',tracks:[2,4,21,22,23,32]},
+  {icon:'🪟',name:'Балкон / 19-й этаж',desc:'Plan B в Incomplete, Plan A в TheStory. Место наивысшего кризиса и решения остаться.',tracks:[15,22]},
+  {icon:'🎭',name:'Notorious Bale (маска)',desc:'Псевдоним как персонаж. Представлен в титрах (т.1), развенчан в Some Piano Joint (т.23). Весь альбом — история этой маски.',tracks:[1,4,11,23]},
+  {icon:'🐦',name:'Трясогузки (Wagtails)',desc:'Символ весны и свободы. Птицы в парке — желание улететь и первый знак надежды после тёмного периода.',tracks:[21]},
+  {icon:'🎮',name:'Польнарефф (JoJo)',desc:'Всегда застигнут в туалете — абсурдный комизм как единственный ответ на суицидальную мысль в пиковый момент.',tracks:[22]},
+  {icon:'✨',name:'Sophia / Мудрость',desc:'Sophia = Sofya = Мудрость. Имя несёт все три смысла. Годами называлась только про себя. В т.29 — произнесена вслух.',tracks:[13,16,20,26,28,29,31,33,34]},
+  {icon:'🎙️',name:'Микрофон / Запись',desc:'Купить микрофон (т.23) = вернуться к жизни. Конкретное действие как символ воли к продолжению.',tracks:[23,35]},
+  {icon:'📝',name:'Текст как спасение',desc:'Альбом написан как терапия. Написать = выжить. Проговаривается прямо в нескольких треках.',tracks:[2,7,10,22]},
+];
+
+function renderSymbols(){
+  const g=document.getElementById('symg');
+  g.innerHTML=SYMS.map(s=>`<div class="sym-card">
+    <div class="sym-icon">${s.icon}</div>
+    <div class="sym-n">${s.name}</div>
+    <div class="sym-d">${s.desc}</div>
+    <div class="sym-chips">${s.tracks.map(n=>{const t=T.find(x=>x.num===n);return t?`<button class="sym-chip" onclick="goTrack(${n})">${n}. ${t.title.length>18?t.title.slice(0,18)+'…':t.title}</button>`:''}).join('')}</div>
+  </div>`).join('');
+}
+
+// TIMELINE
+const TL=[
+  {n:1,dot:'',label:'Кино-пролог. Маска представлена как персонаж.'},
+  {n:2,dot:'',label:'Первая ночная сессия. Мотив рассвета — впервые.'},
+  {n:4,dot:'',label:'Механизм маски разоблачён в структуре одного трека.'},
+  {n:9,dot:'dot-dark',label:'Пассивная суицидальность — хроническое истощение.'},
+  {n:13,dot:'dot-sophia',label:'Первое появление Sofyi. "So far I can\'t sing this song."'},
+  {n:15,dot:'dot-dark',label:'Самый тёмный трек. Смерть дедушки. Plan B — балкон 19-го этажа.'},
+  {n:16,dot:'dot-sophia',label:'"I am craving for dying / But also craving for you" — в одной строке.'},
+  {n:20,dot:'dot-sophia',label:'Самое длинное признание. "I adore you and I hope to God I don\'t meet you."'},
+  {n:22,dot:'dot-turn',label:'⚡ ПЕРЕЛОМ: Балкон. Решение остаться. "But not with this mindset."'},
+  {n:23,dot:'dot-green',label:'"Georik, idyosh?" — маска снята, реальное имя произнесено.'},
+  {n:24,dot:'dot-green',label:'Jiko no ukeire — Принятие себя. Оркестровый переломный момент.'},
+  {n:25,dot:'dot-green',label:'"My friend told me this life is worth living."'},
+  {n:29,dot:'dot-sophia',label:'"Now I let the Universe see, Sophie." Имя — вслух.'},
+  {n:34,dot:'dot-sophia',label:'Финальное признание. Альбом вручён Sofye. "Now I\'m out of fear."'},
+  {n:35,dot:'dot-green',label:'"I am the adult now." Итог пути.'},
+  {n:36,dot:'',label:'Wild West — финальные титры. Герой уходит в закат.'},
+];
+
+function renderTimeline(){
+  const el=document.getElementById('tlel');
+  el.innerHTML=TL.map(ev=>{
+    const t=T.find(x=>x.num===ev.n);
+    return `<div class="tl-row">
+      <div class="tl-n">T${String(ev.n).padStart(2,'0')}</div>
+      <div class="tl-dot ${ev.dot}"></div>
+      <div class="tl-body">
+        <div class="tl-t" onclick="goTrack(${ev.n})">${t?t.title:'?'}</div>
+        <div class="tl-l">${ev.label}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// THEME
+let theme='dark';
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  theme=theme==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',theme);
+  document.getElementById('themeBtn').innerHTML=theme==='dark'
+    ?'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+    :'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+});
+
+renderTracks();renderArcs();renderSymbols();renderTimeline();
+</script></body></html>
